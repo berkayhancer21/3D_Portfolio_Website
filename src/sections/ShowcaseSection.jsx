@@ -1,78 +1,163 @@
+// File: `src/sections/ShowcaseSection.jsx`
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import TitleHeader from "../components/TitleHeader.jsx";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
+
+// Dışa çıkan ok ikonu - fosfor yeşili
+const ExternalLinkIcon = ({ width = 22, height = 22 }) => (
+    <svg
+        width={width}
+        height={height}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="external-link-icon"
+    >
+        <path
+            d="M14 3h7v7"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M10 14L21 3"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M21 21H3V3h7"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
 
 const ShowcaseSection = () => {
     const sectionRef = useRef(null);
-    const project1Ref = useRef(null);
-    const project2Ref = useRef(null);
-    const project3Ref = useRef(null);
+    const projectRefs = [
+        useRef(null),
+        useRef(null),
+        useRef(null),
+        useRef(null),
+        useRef(null),
+        useRef(null),
+    ];
 
     useGSAP(() => {
-        const projects = [project1Ref.current, project2Ref.current, project3Ref.current];
-        projects.forEach((card,index) => {
+        projectRefs.forEach((ref, index) => {
             gsap.fromTo(
-                card,
-                {
-                    y: 50, opacity: 0
-                },
+                ref.current,
+                { y: 50, opacity: 0 },
                 {
                     y: 0,
                     opacity: 1,
                     duration: 1,
-                    delay: 0.3 * (index + 1),
+                    delay: 0.2 * (index % 3 + 1),
                     scrollTrigger: {
-                        trigger: card,
-                        start: "top bottom-=100"
-                    }
+                        trigger: ref.current,
+                        start: "top bottom-=100",
+                    },
                 }
-            )
-        })
+            );
+        });
 
-        gsap.fromTo(sectionRef.current,
-            {opacity:0},
-            {opacity:1, duration:1.5 }, )
-    },[])
+        gsap.fromTo(sectionRef.current, { opacity: 0 }, { opacity: 1, duration: 1.5 });
+    }, []);
+
+    const projects = [
+        {
+            id: 1,
+            title: "AI Movie Recommendation Website",
+            image: "/images/project_1.png",
+            githubUrl: "https://github.com/berkayhancer21/movie_match_hub",
+            technologies: ["Machine Learning", "Web Development", "Next.js", "Pandas", "NumPy", "Scikit-Learn", "Cosine Similarity", "Collaborative Filtering"]
+        },
+        {
+            id: 2,
+            title: "3D Portfolio Website",
+            image: "/images/project_2.png",
+            githubUrl: "https://github.com/berkayhancer21/3D_Portfolio_Website",
+            technologies: ["Vite.js", "React", "Portfolio", "Three.js", "GSAP"]
+        },
+        {
+            id: 3,
+            title: "Algorithmic Trading Bots",
+            image: "/images/project_3.jpg",
+            githubUrl: "https://github.com/berkayhancer21",
+            technologies: ["Python", "Pandas", "NumPy", "Trading", "Binance API", "Machine Learning", "Data Analysis", "Data Visualization"]
+        },
+        {
+            id: 4,
+            title: "Crypto Alarm System",
+            image: "/images/project_4.png",
+            githubUrl: "https://github.com/berkayhancer21/crypto_alarms_system",
+            technologies: ["Next.js", "React", "stock exchange API", "REST API", "Telegram Bot API", "TypeScript"]
+        }
+    ];
+
     return (
-        <section id="work" ref={sectionRef} className="app-showcase">
-            <div className="w-full">
-                <div className="showcaselayout">
-                    {/* LEFT */}
-                    <div className="first-project-wrapper" ref={project1Ref}>
-                        <div className="image-wrapper">
-                            <img src="/images/project1.png" alt="Ryde"/>
-                        </div>
-                        <div className="text-content">
-                            <h2>On-Demand Rides Made Simple with a Powerful, User-Friendly App Called Ryde</h2>
-                            <p className="text-white-50 md:text-xl">
-                                An app built with React Native, Expo, & TailwindCSS for a fast, user-friendly experience.
-                            </p>
+        <section id="works" ref={sectionRef} className="app-showcase py-16">
+            <div className="container mx-auto px-4">
+                <div id="works-inner" className="works-inner mx-auto w-full max-w-6xl px-4">
+                    <TitleHeader title="Projects" sub="👨‍💻 My Works" />
 
-                        </div>
-                    </div>
-                    {/* RIGHT */}
-                    <div className="project-list-wrapper overflow-hidden">
-                        <div className="project" ref={project2Ref}>
-                            <div className="image-wrapper bg-[#ffefdb]">
-                                <img src="/images/project2.png" alt="Library Manangement Platform"/>
+                    <div className="projects-grid grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12 mt-8">
+                        {projects.map((project, index) => (
+                            <div
+                                key={project.id}
+                                className="project-card"
+                                ref={projectRefs[index]}
+                            >
+                                <a
+                                    href={project.githubUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="project-link-wrapper"
+                                    aria-label={`View ${project.title} on GitHub`}
+                                >
+                                    <div className="project-inner">
+                                        <div className="project-image">
+                                            <img src={project.image} alt={project.title} />
+
+                                            {/* Sağ üst köşe linki */}
+                                            <div className="project-link-icon">
+                                                <ExternalLinkIcon />
+                                            </div>
+                                        </div>
+
+                                        {/* Teknolojiler: fosfor yeşili badge'ler */}
+                                        <div className="tech-badges" aria-hidden="false">
+                                            {project.technologies.map((tech, techIndex) => (
+                                                <span key={techIndex} className="tech-badge">
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        {/* Başlık ve açıklama - ortalı */}
+                                        <div className="project-content center-content">
+                                            <h3>{project.title}</h3>
+                                            <p>{project.description}</p>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                            <h2>Library Manangement Platform</h2>
-                        </div>
-
-
-                        <div className="project" ref={project3Ref}>
-                            <div className="image-wrapper bg-[#ffe7eb]">
-                                <img src="/images/project3.png" alt="YC Directory"/>
-                            </div>
-                            <h2>YC Directory - A Startup Showcase App</h2>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </section>
-    )
-}
-export default ShowcaseSection
+    );
+};
+
+export default ShowcaseSection;
+

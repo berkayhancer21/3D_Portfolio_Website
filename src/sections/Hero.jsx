@@ -3,12 +3,7 @@ import Button from "../components/Button.jsx";
 import HeroExperience from "../components/HeroModels/HeroExperience.jsx";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
-import AnimetedCounter from "../components/AnimetedCounter.jsx";
-{/*
---> stagger basamaklı geçiş sağlar
---> duration animasyonda olması gereken süreyi belirler
 
-*/}
 const Hero = () => {
     useGSAP( () => {
         gsap.fromTo('.hero-text h1',
@@ -62,16 +57,17 @@ const Hero = () => {
                         </div>
                         <p className="text-white-50 md:text-xl relative z-10
                             pointer-events-none max-w-3xl">
-                            Hi, I'm Berkay — a Computer Engineer driven by a deep passion for coding.
-                            I specialize in building algorithmic trading solutions using Python and creating dynamic, data-driven web applications with React and Next.js.
-                            Explore my projects below and see how I turn ideas into powerful digital solutions.
+                            I’m a computer engineer focused on algorithmic trading and modern web development.
+                            I build data-driven trading systems and scalable products with React and Next.js.
+                            I also develop desktop and web applications using C# and Entity Framework, and explore game development with Unity.
+                            My TÜBİTAK-funded algorithmic trading project reflects my goal of turning research into reliable, production-ready software.
                         </p>
                         <Button
-                            text="See My Work"
                             className="md:w-80 md:h-16 w-60 h-12"
-                            id="work"
+                            id="button"
+                            text="See my Work"
+                            href="#works"
                         />
-
                     </div>
                 </header>
 
@@ -82,8 +78,8 @@ const Hero = () => {
                     </div>
                 </figure>
             </div>
-            {/*<AnimetedCounter/>*/}
         </section>
     )
 }
+
 export default Hero

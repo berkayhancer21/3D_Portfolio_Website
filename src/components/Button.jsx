@@ -1,31 +1,34 @@
+// File: src/components/Button.jsx
+import React from "react";
 /**
- * A reusable CTA button component.
- * When clicked, it scrolls smoothly to the section with ID "counter",
- * with a small offset from the top for better visual placement.
+ * CTA button: accepts `href` (e.g. "#works") and performs smooth scroll
+ * taking navbar height into account. Also preserves accessible href.
  */
+const Button = ({ text, className, href, id }) => {
+    const handleClick = (e) => {
+        // if no hash target provided, allow default behavior
+        if (!href || !href.startsWith("#")) return;
 
-const Button = ({ text, className, id }) => {
+        e.preventDefault();
+        const targetId = href.slice(1);
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        // use navbar height if present, otherwise fallback to 15% of viewport
+        const navbar = document.querySelector(".navbar");
+        const navbarHeight = navbar ? navbar.offsetHeight : Math.round(window.innerHeight * 0.15);
+        const extraGap = 8; // küçük ek boşluk
+        const top = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight - extraGap;
+
+        window.scrollTo({ top, behavior: "smooth" });
+    };
+
     return (
         <a
-            onClick={(e) => {
-                e.preventDefault(); // Stop the link from jumping instantly
-
-                const target = document.getElementById("counter"); // Find the section with ID "counter"
-
-                // Only scroll if we found the section and an ID is passed in
-                // taht prevents the contact button from scrolling to the top
-                if (target && id) {
-                    const offset = window.innerHeight * 0.15; // Leave a bit of space at the top
-
-                    // Calculate how far down the page we need to scroll
-                    const top =
-                        target.getBoundingClientRect().top + window.pageYOffset - offset;
-
-                    // Scroll smoothly to that position
-                    window.scrollTo({ top, behavior: "smooth" });
-                }
-            }}
-            className={`${className ?? ""} cta-wrapper`} // Add base + extra class names
+            href={href ?? "#"}
+            onClick={handleClick}
+            className={`${className ?? ""} cta-wrapper`}
+            id={id ?? undefined}
         >
             <div className="cta-button group">
                 <div className="bg-circle" />
