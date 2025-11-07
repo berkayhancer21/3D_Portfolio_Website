@@ -63,7 +63,7 @@ const Hero = () => {
                             My TÜBİTAK-funded algorithmic trading project reflects my goal of turning research into reliable, production-ready software.
                         </p>
                         <Button
-                            className="md:w-80 md:h-16 w-60 h-12"
+                            className="md:w-80 md:h-16 w-60 h-12 md:mt-0 mt-[50vh]"
                             id="button"
                             text="See my Work"
                             href="#works"
