@@ -115,9 +115,9 @@ section {
             @apply pointer-events-none;
             position: relative !important; /* absolute yerine relative */
             top: auto !important; /* top pozisyonunu iptal et */
-            margin-top: 1rem; /* Yazılardan sonra boşluk - azaltıldı */
-            max-height: 70vh; /* Daha yüksek - 60vh'den 70vh'ye */
-            min-height: 60vh; /* Minimum yükseklik ekle */
+            margin-top: 0.5rem; /* Yazılardan sonra minimal boşluk */
+            max-height: 80vh; /* Çok daha yüksek - 70vh'den 80vh'ye */
+            min-height: 70vh; /* Minimum yükseklik artırıldı */
         }
 
         .hero-3d-layout canvas {
