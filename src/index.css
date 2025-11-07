@@ -84,10 +84,11 @@ section {
         @apply relative z-10 xl:mt-20 mt-32 md:h-dvh flex xl:items-center items-start justify-center;
     }
 
-    /* Mobilde hero layout column olsun */
+    /* Mobilde hero layout column olsun ve 3D oda olmadığı için compact */
     @media (max-width: 768px) {
         .hero-layout {
-            @apply flex-col h-auto min-h-screen;
+            @apply flex-col h-auto min-h-0; /* min-height kaldırıldı */
+            padding-bottom: 2rem; /* Alt boşluk */
         }
     }
 
@@ -109,19 +110,11 @@ section {
         @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 xl:-right-20 right-0;
     }
 
-    /* Mobilde 3D model scroll'u engellemesin ve yazıların altında olsun */
-    @media (max-width: 768px) {
+    /* Mobilde 3D model yok - bu CSS'e gerek yok artık ama tablet için bırakıyoruz */
+    @media (min-width: 769px) and (max-width: 1024px) {
         .hero-3d-layout {
-            @apply pointer-events-none;
-            position: relative !important; /* absolute yerine relative */
-            top: auto !important; /* top pozisyonunu iptal et */
-            margin-top: 0.5rem; /* Yazılardan sonra minimal boşluk */
-            max-height: 80vh; /* Çok daha yüksek - 70vh'den 80vh'ye */
-            min-height: 70vh; /* Minimum yükseklik artırıldı */
-        }
-
-        .hero-3d-layout canvas {
             @apply pointer-events-auto;
+            max-height: 60vh;
         }
     }
 

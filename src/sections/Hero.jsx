@@ -71,8 +71,8 @@ const Hero = () => {
                     </div>
                 </header>
 
-                {/* RIGHT: 3D MODEL */}
-                <figure>
+                {/* RIGHT: 3D MODEL - Sadece Desktop'ta göster */}
+                <figure className="hidden md:block">
                     <div className="hero-3d-layout border-red-200">
                         <HeroExperience />
                     </div>
