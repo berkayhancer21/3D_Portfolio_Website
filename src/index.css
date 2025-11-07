@@ -112,10 +112,12 @@ section {
     /* Mobilde 3D model scroll'u engellemesin ve yazıların altında olsun */
     @media (max-width: 768px) {
         .hero-3d-layout {
-            @apply pointer-events-none max-h-[60vh];
+            @apply pointer-events-none;
             position: relative !important; /* absolute yerine relative */
             top: auto !important; /* top pozisyonunu iptal et */
-            margin-top: 2rem; /* Yazılardan sonra boşluk */
+            margin-top: 1rem; /* Yazılardan sonra boşluk - azaltıldı */
+            max-height: 70vh; /* Daha yüksek - 60vh'den 70vh'ye */
+            min-height: 60vh; /* Minimum yükseklik ekle */
         }
 
         .hero-3d-layout canvas {
