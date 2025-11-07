@@ -81,7 +81,14 @@ section {
     }
 
     .hero-layout {
-        @apply relative z-10 xl:mt-20 mt-32 md:h-dvh h-[80vh] flex xl:items-center items-start justify-center;
+        @apply relative z-10 xl:mt-20 mt-32 md:h-dvh flex xl:items-center items-start justify-center;
+    }
+
+    /* Mobilde hero layout column olsun */
+    @media (max-width: 768px) {
+        .hero-layout {
+            @apply flex-col h-auto min-h-screen;
+        }
     }
 
     .hero-text {
@@ -102,10 +109,13 @@ section {
         @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 xl:-right-20 right-0;
     }
 
-    /* Mobilde 3D model scroll'u engellemesin */
+    /* Mobilde 3D model scroll'u engellemesin ve yazıların altında olsun */
     @media (max-width: 768px) {
         .hero-3d-layout {
             @apply pointer-events-none max-h-[60vh];
+            position: relative !important; /* absolute yerine relative */
+            top: auto !important; /* top pozisyonunu iptal et */
+            margin-top: 2rem; /* Yazılardan sonra boşluk */
         }
 
         .hero-3d-layout canvas {
