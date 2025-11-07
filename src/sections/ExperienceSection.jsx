@@ -8,46 +8,57 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const ExperienceSection = () => {
+    const isMobile = window.innerWidth < 768;
+
     useGSAP(() => {
+        // Mobilde daha basit animasyonlar
+        const animationDuration = isMobile ? 0.6 : 1;
+
         gsap.utils.toArray('.timeline-card').forEach((card) => {
             gsap.from(card, {
-                xPercent: -100,
+                xPercent: isMobile ? -50 : -100,
                 opacity: 0,
                 transformOrigin: 'left left',
-                duration: 1,
+                duration: animationDuration,
                 ease: 'power2.inOut',
+                force3D: true, // GPU acceleration
                 scrollTrigger: {
                     trigger: card,
-                    start: 'top 80%'
+                    start: 'top 80%',
+                    once: true // Sadece bir kez animate et
                 }
             })
         })
-        gsap.to('.timeline', {
-            transformOrigin: 'bottom bottom',
-            ease: 'power1.inOut',
-            scrollTrigger: {
-                trigger: '.timeline',
-                start: 'top center',
-                end: '70% center',
-                onUpdate: (self) => {
-                    gsap.to('.timeline', {
-                        scaleY: 1 - self.progress
-                    })
 
-                }
-            },
-
-        })
+        // Timeline animasyonunu mobilde devre dışı bırak
+        if (!isMobile) {
+            gsap.to('.timeline', {
+                transformOrigin: 'bottom bottom',
+                ease: 'power1.inOut',
+                scrollTrigger: {
+                    trigger: '.timeline',
+                    start: 'top center',
+                    end: '70% center',
+                    onUpdate: (self) => {
+                        gsap.to('.timeline', {
+                            scaleY: 1 - self.progress
+                        })
+                    }
+                },
+            })
+        }
 
         gsap.utils.toArray('.expText').forEach((text) => {
             gsap.from(text, {
                 xPercent: 0,
                 opacity: 0,
-                duration: 1,
+                duration: animationDuration,
                 ease: 'power2.inOut',
+                force3D: true,
                 scrollTrigger: {
                     trigger: text,
-                    start: 'top 60%'
+                    start: 'top 60%',
+                    once: true
                 }
             })
         })

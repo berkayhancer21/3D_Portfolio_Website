@@ -5,27 +5,29 @@ const Loader = ({ onLoadComplete }) => {
     const [isClicked, setIsClicked] = useState(false);
 
     useEffect(() => {
-        // İlk animasyon - butonun belirmesi
+        // İlk animasyon - butonun belirmesi (daha hızlı)
         gsap.fromTo('.loader-button',
             { scale: 0, opacity: 0, rotation: -180 },
             {
                 scale: 1,
                 opacity: 1,
                 rotation: 0,
-                duration: 1.2,
+                duration: 0.8, // 1.2'den 0.8'e düşürüldü
                 ease: 'elastic.out(1, 0.5)',
-                delay: 0.5
+                delay: 0.3, // 0.5'ten 0.3'e düşürüldü
+                force3D: true
             }
         );
 
-        // Parlama efekti animasyonu
+        // Parlama efekti animasyonu (daha hızlı)
         gsap.to('.loader-glow', {
             scale: 1.3,
             opacity: 0.6,
-            duration: 2,
+            duration: 1.5, // 2'den 1.5'e düşürüldü
             repeat: -1,
             yoyo: true,
-            ease: 'sine.inOut'
+            ease: 'sine.inOut',
+            force3D: true
         });
     }, []);
 
@@ -48,38 +50,42 @@ const Loader = ({ onLoadComplete }) => {
         const timeline = gsap.timeline({
             onComplete: () => {
                 // Animasyon bittiğinde parent component'e haber ver
-                setTimeout(() => onLoadComplete(), 300);
+                setTimeout(() => onLoadComplete(), 200); // 300'den 200'e düşürüldü
             }
         });
 
-        // Logo ve buton kaybolsun
+        // Logo ve buton kaybolsun (daha hızlı)
         timeline.to('.loader-content', {
             y: -50,
             opacity: 0,
-            duration: 0.6,
-            ease: 'power3.in'
+            duration: 0.4, // 0.6'dan 0.4'e düşürüldü
+            ease: 'power3.in',
+            force3D: true
         });
 
-        // Sol perde açılsın
+        // Sol perde açılsın (daha hızlı)
         timeline.to('.curtain-left', {
             x: '-100%',
-            duration: 1.2,
-            ease: 'power4.inOut'
-        }, '-=0.3');
+            duration: 0.8, // 1.2'den 0.8'e düşürüldü
+            ease: 'power4.inOut',
+            force3D: true
+        }, '-=0.2');
 
-        // Sağ perde açılsın
+        // Sağ perde açılsın (daha hızlı)
         timeline.to('.curtain-right', {
             x: '100%',
-            duration: 1.2,
-            ease: 'power4.inOut'
-        }, '-=1.2');
+            duration: 0.8, // 1.2'den 0.8'e düşürüldü
+            ease: 'power4.inOut',
+            force3D: true
+        }, '-=0.8');
 
         // Arka plan kaybolsun
         timeline.to('.loader-container', {
             opacity: 0,
-            duration: 0.4,
-            ease: 'power2.out'
-        }, '-=0.4');
+            duration: 0.3, // 0.4'ten 0.3'e düşürüldü
+            ease: 'power2.out',
+            force3D: true
+        }, '-=0.3');
     };
 
     return (

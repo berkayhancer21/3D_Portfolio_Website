@@ -4,28 +4,43 @@ import { Canvas } from "@react-three/fiber";
 import Computer from "./Computer";
 
 const ContactExperience = () => {
+    const isMobile = window.innerWidth < 768;
+
     return (
-        <Canvas shadows camera={{ position: [0, 3, 7], fov: 45 }}>
+        <Canvas
+            shadows={!isMobile} // Mobilde shadow'ları kapat
+            camera={{ position: [0, 3, 7], fov: 45 }}
+            dpr={isMobile ? [1, 1.5] : [1, 2]}
+            performance={{ min: 0.5 }}
+        >
             <ambientLight intensity={0.5} color="#fff4e6" />
 
-            <directionalLight position={[5, 5, 3]} intensity={2.5} color="#ffd9b3" />
+            <directionalLight
+                position={[5, 5, 3]}
+                intensity={2.5}
+                color="#ffd9b3"
+            />
 
             <directionalLight
                 position={[5, 9, 1]}
-                castShadow
+                castShadow={!isMobile}
                 intensity={2.5}
                 color="#ffd9b3"
+                shadow-mapSize-width={isMobile ? 512 : 1024}
+                shadow-mapSize-height={isMobile ? 512 : 1024}
             />
 
             <OrbitControls
                 enableZoom={false}
                 minPolarAngle={Math.PI / 5}
                 maxPolarAngle={Math.PI / 2}
+                enableDamping={!isMobile}
+                dampingFactor={0.05}
             />
 
             <group scale={[1, 1, 1]}>
                 <mesh
-                    receiveShadow
+                    receiveShadow={!isMobile}
                     position={[0, -1.5, 0]}
                     rotation={[-Math.PI / 2, 0, 0]}
                 >
@@ -34,7 +49,7 @@ const ContactExperience = () => {
                 </mesh>
             </group>
 
-            <group scale={0.03} position={[0, -1.49, -2]} castShadow>
+            <group scale={0.03} position={[0, -1.49, -2]} castShadow={!isMobile}>
                 <Computer />
             </group>
         </Canvas>

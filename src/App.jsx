@@ -1,14 +1,16 @@
-import { useState } from "react";
-import Hero from "./sections/Hero.jsx";
-import ShowcaseSection from "./sections/ShowcaseSection.jsx";
+import { useState, lazy, Suspense } from "react";
 import NavBar from "./components/NavBar.jsx";
-import FeatureCards from "./sections/FeatureCards.jsx";
-import ExperienceSection from "./sections/ExperienceSection.jsx";
-import TechStack from "./sections/TechStack.jsx";
-import Cv from "./sections/Cv.jsx";
-import Contact from "./sections/Contact.jsx";
-import Footer from "./sections/Footer.jsx";
+import Hero from "./sections/Hero.jsx";
 import Loader from "./components/Loader.jsx";
+
+// Lazy load heavy components
+const ShowcaseSection = lazy(() => import("./sections/ShowcaseSection.jsx"));
+const FeatureCards = lazy(() => import("./sections/FeatureCards.jsx"));
+const ExperienceSection = lazy(() => import("./sections/ExperienceSection.jsx"));
+const TechStack = lazy(() => import("./sections/TechStack.jsx"));
+const Cv = lazy(() => import("./sections/Cv.jsx"));
+const Contact = lazy(() => import("./sections/Contact.jsx"));
+const Footer = lazy(() => import("./sections/Footer.jsx"));
 
 const App = () => {
     // Her sayfa yüklendiğinde (F5) loader'ı göster
@@ -29,13 +31,17 @@ const App = () => {
             {/* Ana site içeriği */}
             <NavBar />
             <Hero />
-            <ShowcaseSection />
-            <FeatureCards />
-            <ExperienceSection />
-            <TechStack />
-            <Cv />
-            <Contact />
-            <Footer />
+
+            {/* Lazy loaded sections */}
+            <Suspense fallback={<div className="min-h-screen" />}>
+                <ShowcaseSection />
+                <FeatureCards />
+                <ExperienceSection />
+                <TechStack />
+                <Cv />
+                <Contact />
+                <Footer />
+            </Suspense>
         </>
     )
 }

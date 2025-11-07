@@ -53,24 +53,32 @@ const ShowcaseSection = () => {
     ];
 
     useGSAP(() => {
+        const isMobile = window.innerWidth < 768;
+
         projectRefs.forEach((ref, index) => {
             gsap.fromTo(
                 ref.current,
-                { y: 50, opacity: 0 },
+                { y: isMobile ? 30 : 50, opacity: 0 },
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 1,
+                    duration: isMobile ? 0.6 : 1,
                     delay: 0.2 * (index % 3 + 1),
+                    force3D: true,
                     scrollTrigger: {
                         trigger: ref.current,
                         start: "top bottom-=100",
+                        once: true // Sadece bir kez animate et
                     },
                 }
             );
         });
 
-        gsap.fromTo(sectionRef.current, { opacity: 0 }, { opacity: 1, duration: 1.5 });
+        gsap.fromTo(sectionRef.current, { opacity: 0 }, {
+            opacity: 1,
+            duration: isMobile ? 1 : 1.5,
+            force3D: true
+        });
     }, []);
 
     const projects = [
