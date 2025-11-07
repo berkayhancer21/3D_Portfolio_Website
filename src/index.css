@@ -1791,13 +1791,21 @@ section {
     display: block;
 }
 
+/* CV Image (Mobile) */
+.cv-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+}
+
 /* Mobilde CV daha uzun ve kaydırmalı olsun */
 @media (max-width: 768px) {
     .cv-pdf-embed {
         aspect-ratio: unset; /* Aspect ratio'yu kaldır */
-        min-height: 80vh; /* Minimum yükseklik */
-        max-height: 90vh; /* Maximum yükseklik */
-        overflow-y: auto; /* Kaydırma çubuğu */
+        min-height: auto; /* Auto yükseklik - PNG için */
+        max-height: none; /* Sınırsız yükseklik */
+        overflow-y: visible; /* Kaydırma yok - PNG zaten tam gösterilecek */
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
     }
@@ -1805,6 +1813,12 @@ section {
     .cv-iframe {
         height: 140vh; /* iframe'i daha uzun yap, kaydırılabilir olsun */
         min-height: 800px;
+    }
+
+    .cv-image {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
     }
 }
 

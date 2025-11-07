@@ -22,6 +22,8 @@ const DownloadIcon = () => (
 
 const Cv = () => {
     const cvPath = "/files/Berkay_HANÇER_CV_Ingilizce.pdf";
+    const cvImagePath = "/files/Berkay_Hancer_CV_EN.png";
+    const isMobile = window.innerWidth <= 768;
 
     useGSAP(() => {
         // Başlık animasyonu
@@ -109,13 +111,23 @@ const Cv = () => {
                                 <PreviewIcon />
                             </button>
 
-                            {/* PDF Embed */}
+                            {/* PDF/PNG Embed - Mobilde PNG, Desktop'ta PDF */}
                             <div className="cv-pdf-embed">
-                                <iframe
-                                    src={`${cvPath}#toolbar=0&navpanes=0&scrollbar=0`}
-                                    title="Berkay HANÇER CV"
-                                    className="cv-iframe"
-                                />
+                                {isMobile ? (
+                                    // Mobilde PNG göster
+                                    <img
+                                        src={cvImagePath}
+                                        alt="Berkay HANÇER CV"
+                                        className="cv-image w-full h-auto object-contain"
+                                    />
+                                ) : (
+                                    // Desktop'ta PDF göster
+                                    <iframe
+                                        src={`${cvPath}#toolbar=0&navpanes=0&scrollbar=0`}
+                                        title="Berkay HANÇER CV"
+                                        className="cv-iframe"
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
