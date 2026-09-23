@@ -22,7 +22,7 @@ const NavBar = () => {
     return (
         <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
             <div className="inner">
-                <Link className="logo" to="/home" onClick={() => setMobileMenuOpen(false)}>
+                <Link className="logo" to="/" onClick={() => setMobileMenuOpen(false)}>
                     Berkay HANÇER
                 </Link>
 
@@ -33,6 +33,7 @@ const NavBar = () => {
                             <li key={name} className="nav-item group">
                                 <NavLink
                                     to={link}
+                                    end={link === "/"}
                                     className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                                     onMouseEnter={() => preloadPage(link)}
                                     onFocus={() => preloadPage(link)}
@@ -83,6 +84,7 @@ const NavBar = () => {
                                 <li key={name} className="mobile-nav-item">
                                     <NavLink
                                         to={link}
+                                        end={link === "/"}
                                         className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
                                         onTouchStart={() => preloadPage(link)}
                                         onClick={() => setMobileMenuOpen(false)}

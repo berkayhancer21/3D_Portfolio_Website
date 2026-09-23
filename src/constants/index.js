@@ -1,7 +1,7 @@
 const navLinks = [
     {
         name: "Home",
-        link: "/home",
+        link: "/",
     },
     {
         name: "Projects",
@@ -27,7 +27,7 @@ const navLinks = [
 
 // Eski tek sayfa (#hash) linklerini yeni sayfalara yönlendirmek için
 const legacyHashRoutes = {
-    "#hero": "/home",
+    "#hero": "/",
     "#works": "/projects",
     "#experience": "/experience",
     "#skills": "/skills",

@@ -8,10 +8,11 @@ import Home from "./pages/Home.jsx";
 import { ShowcaseSection, ExperienceSection, TechStack, Cv, Contact } from "./pages/index.js";
 import { legacyHashRoutes } from "./constants/index.js";
 
-// "/" adresi /home'a yönlenir; eski "/#works" gibi linkler ilgili sayfaya gider
-const RootRedirect = () => {
+// Ana sayfa direkt domain adresinde ("/"); eski "/#works" gibi linkler ilgili sayfaya gider
+const HomeRoute = () => {
     const { hash } = useLocation();
-    return <Navigate to={legacyHashRoutes[hash] ?? "/home"} replace />;
+    const target = legacyHashRoutes[hash];
+    return target && target !== "/" ? <Navigate to={target} replace /> : <Home />;
 };
 
 const App = () => {
@@ -28,14 +29,14 @@ const App = () => {
             <Suspense fallback={<div className="min-h-screen" />}>
                 <main className="page-main relative z-[1]">
                     <Routes>
-                        <Route path="/" element={<RootRedirect />} />
-                        <Route path="/home" element={<Home />} />
+                        <Route path="/" element={<HomeRoute />} />
+                        <Route path="/home" element={<Navigate to="/" replace />} />
                         <Route path="/projects" element={<ShowcaseSection />} />
                         <Route path="/experience" element={<ExperienceSection />} />
                         <Route path="/skills" element={<TechStack />} />
                         <Route path="/cv" element={<Cv />} />
                         <Route path="/contact" element={<Contact />} />
-                        <Route path="*" element={<Navigate to="/home" replace />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </main>
 

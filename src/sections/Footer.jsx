@@ -7,7 +7,7 @@ const Footer = () => {
             <div className="footer-container-new">
                 {/* Sol Taraf - Logo ve Açıklama */}
                 <div className="footer-left">
-                    <Link to="/home" className="footer-logo">
+                    <Link to="/" className="footer-logo">
                         Berkay HANÇER
                     </Link>
                     <p className="footer-description">
