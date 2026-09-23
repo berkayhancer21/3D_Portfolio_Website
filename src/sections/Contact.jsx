@@ -1,11 +1,48 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from '@emailjs/browser';
 import TitleHeader from "../components/TitleHeader";
 import ContactExperience from "../components/Models/Contact/ContactExperience";
 
+// Gönderim sonucu uyarı kutusu
+const StatusAlert = ({ status, onClose }) => {
+    if (status !== "success" && status !== "error") return null;
+    const isSuccess = status === "success";
+
+    return (
+        <div className={`contact-alert ${isSuccess ? "contact-alert-success" : "contact-alert-error"}`} role="status">
+            <span className="contact-alert-icon" aria-hidden="true">
+                {isSuccess ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 7v6M12 17h.01" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                    </svg>
+                )}
+            </span>
+            <div className="contact-alert-content">
+                <p className="contact-alert-title">
+                    {isSuccess ? "Your message has been sent." : "Your message couldn’t be sent."}
+                </p>
+                <p className="contact-alert-text">
+                    {isSuccess
+                        ? "Thanks for reaching out — I’ll get back to you soon."
+                        : "Please try again in a moment or email me at hberkay2159@gmail.com."}
+                </p>
+            </div>
+            <button type="button" className="contact-alert-close" onClick={onClose} aria-label="Close notification">
+                ×
+            </button>
+        </div>
+    );
+};
+
 const Contact = () => {
     const formRef = useRef(null);
-    const [loading, setLoading] = useState(false);
+    // "idle" | "sending" | "success" | "error"
+    const [status, setStatus] = useState("idle");
+    const isSending = status === "sending";
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -19,7 +56,8 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Show loading state
+        if (isSending) return;
+        setStatus("sending");
 
         try {
             await emailjs.sendForm(
@@ -29,14 +67,21 @@ const Contact = () => {
                 import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
             );
 
-            // Reset form and stop loading
+            // Formu temizle ve başarı uyarısını göster
             setForm({ name: "", email: "", message: "" });
+            setStatus("success");
         } catch (error) {
-            console.error("EmailJS Error:", error); // Optional: show toast
-        } finally {
-            setLoading(false); // Always stop loading, even on error
+            console.error("EmailJS Error:", error);
+            setStatus("error");
         }
     };
+
+    // Başarı uyarısı birkaç saniye sonra kendiliğinden kapanır
+    useEffect(() => {
+        if (status !== "success") return;
+        const timer = setTimeout(() => setStatus("idle"), 6000);
+        return () => clearTimeout(timer);
+    }, [status]);
 
     return (
         <section id="contact" className="flex-center section-padding">
@@ -92,17 +137,28 @@ const Contact = () => {
                                     />
                                 </div>
 
-                                <button type="submit">
+                                <button type="submit" disabled={isSending} aria-busy={isSending}>
                                     <div className="cta-button group">
                                         <div className="bg-circle" />
                                         <p className="text">
-                                            {loading ? "Sending..." : "Send Message"}
+                                            {isSending ? (
+                                                <>
+                                                    Sending
+                                                    <span className="sending-dots" aria-hidden="true">
+                                                        <span>.</span><span>.</span><span>.</span>
+                                                    </span>
+                                                </>
+                                            ) : "Send Message"}
                                         </p>
                                         <div className="arrow-wrapper">
                                             <img src="/images/arrow-down.svg" alt="arrow" />
                                         </div>
                                     </div>
                                 </button>
+
+                                <div aria-live="polite">
+                                    <StatusAlert status={status} onClose={() => setStatus("idle")} />
+                                </div>
                             </form>
                         </div>
                     </div>
