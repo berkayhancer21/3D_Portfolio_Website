@@ -1,5 +1,7 @@
 import {navLinks} from "../constants/index.js";
 import {useEffect, useState} from "react";
+import {Link, NavLink} from "react-router-dom";
+import {preloadPage} from "../pages/index.js";
 
 const NavBar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -8,10 +10,11 @@ const NavBar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 10;
-            setScrolled(true);
+            setScrolled(isScrolled);
         }
 
-        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -19,19 +22,24 @@ const NavBar = () => {
     return (
         <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
             <div className="inner">
-                <a className="logo" href="#hero">
+                <Link className="logo" to="/home" onClick={() => setMobileMenuOpen(false)}>
                     Berkay HANÇER
-                </a>
+                </Link>
 
                 {/* Masaüstü navigasyonu */}
                 <nav className="desktop-nav">
                     <ul className="nav-links">
                         {navLinks.map(({ link, name}) => (
                             <li key={name} className="nav-item group">
-                                <a href={link} className="nav-link">
+                                <NavLink
+                                    to={link}
+                                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                                    onMouseEnter={() => preloadPage(link)}
+                                    onFocus={() => preloadPage(link)}
+                                >
                                     <span>{name}</span>
                                     <span className="nav-underline"></span>
-                                </a>
+                                </NavLink>
                             </li>
                         ))}
                     </ul>
@@ -73,13 +81,14 @@ const NavBar = () => {
                         <ul className="mobile-nav-links">
                             {navLinks.map(({ link, name }) => (
                                 <li key={name} className="mobile-nav-item">
-                                    <a
-                                        href={link}
-                                        className="mobile-nav-link"
+                                    <NavLink
+                                        to={link}
+                                        className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+                                        onTouchStart={() => preloadPage(link)}
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
                                         {name}
-                                    </a>
+                                    </NavLink>
                                 </li>
                             ))}
                         </ul>

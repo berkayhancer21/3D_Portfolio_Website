@@ -1,10 +1,11 @@
 import {Environment, Float, OrbitControls, useGLTF} from "@react-three/drei";
 import {Canvas} from "@react-three/fiber";
-import {useEffect} from "react";
+import {Suspense, useEffect} from "react";
 import * as THREE from "three";
 
 
-const TechIcon = ({ model }) => {
+// Model Canvas'ın içinde yüklenir; böylece yüklenirken tüm sayfa askıya alınmaz
+const TechModel = ({ model }) => {
     const scene = useGLTF(model.modelPath)
 
     useEffect(() => {
@@ -16,22 +17,30 @@ const TechIcon = ({ model }) => {
             })
         }
 
-    }, [scene]);
+    }, [scene, model.name]);
 
     return (
-        <Canvas>
+        <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
+            <group scale={model.scale} rotation={model.rotation}>
+                <primitive object={scene.scene} />
+            </group>
+
+        </Float>
+    )
+}
+
+const TechIcon = ({ model }) => {
+    return (
+        <Canvas dpr={[1, 1.5]}>
             <ambientLight intensity={0.3} />
             <directionalLight position={[5,5,5]} intensity={1} />
 
-            <Environment preset="city" />
-
             <OrbitControls enableZoom={false}/>
-            <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
-                <group scale={model.scale} rotation={model.rotation}>
-                    <primitive object={scene.scene} />
-                </group>
 
-            </Float>
+            <Suspense fallback={null}>
+                <Environment preset="city" />
+                <TechModel model={model} />
+            </Suspense>
         </Canvas>
     )
 }

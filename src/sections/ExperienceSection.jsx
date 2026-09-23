@@ -107,7 +107,7 @@ const ExperienceSection = () => {
                                                         height: "70px",
                                                         background: "conic-gradient(from 0deg, rgba(99,102,241,0.5), rgba(168,85,247,0.3), rgba(59,130,246,0.5), rgba(99,102,241,0.5))",
                                                         filter: "blur(15px)",
-                                                        animation: "spin 8s linear infinite",
+                                                        animation: "timelineSpin 8s linear infinite",
                                                         zIndex: 1,
                                                     }}
                                                 />
@@ -137,12 +137,6 @@ const ExperienceSection = () => {
                                                     }}
                                                 />
 
-                                                <style jsx>{`
-                                                    @keyframes spin {
-                                                        from { transform: rotate(0deg); }
-                                                        to { transform: rotate(360deg); }
-                                                    }
-                                                `}</style>
                                             </div>
                                             <div>
                                                 <h1 className="font-semibold text-3xl">{card.title}</h1>

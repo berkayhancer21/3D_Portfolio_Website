@@ -2,8 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/fav_icon.png" />
+    <link rel="icon" type="image/png" href="/images/favicon-64.png" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Berkay Hançer - Computer engineer building algorithmic trading systems and modern web applications with React, Next.js and C#." />
+    <meta name="theme-color" content="#000000" />
+    <script>
+      // Ana sayfadaki profil fotoğrafını JS beklemeden indirmeye başla (LCP)
+      // Yol src/constants/index.js içindeki profile.photo ile aynı olmalı
+      if (/^\/(home\/?)?$/.test(location.pathname)) {
+        var l = document.createElement('link');
+        l.rel = 'preload'; l.as = 'image'; l.href = '/images/profile.jpg';
+        l.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(l);
+      }
+    </script>
     <title>Berkay Hançer | Portfolio</title>
   </head>
   <body>

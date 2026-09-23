@@ -85,35 +85,35 @@ const ShowcaseSection = () => {
         {
             id: 1,
             title: "AI Movie Recommendation Website",
-            image: "/images/project_1.png",
+            image: "/images/project_1.webp",
             githubUrl: "https://github.com/berkayhancer21/movie_match_hub",
             technologies: ["Machine Learning", "Web Development", "Next.js", "Pandas", "NumPy", "Scikit-Learn", "Cosine Similarity", "Collaborative Filtering"]
         },
         {
             id: 2,
             title: "3D Portfolio Website",
-            image: "/images/project_2.png",
+            image: "/images/project_2.webp",
             githubUrl: "https://github.com/berkayhancer21/3D_Portfolio_Website",
             technologies: ["Vite.js", "React", "Portfolio", "Three.js", "GSAP"]
         },
         {
             id: 3,
             title: "Algorithmic Trading Bots",
-            image: "/images/project_3.jpg",
+            image: "/images/project_3.webp",
             githubUrl: "https://github.com/berkayhancer21",
             technologies: ["Python", "Pandas", "NumPy", "Trading", "Binance API", "Machine Learning", "Data Analysis", "Data Visualization"]
         },
         {
             id: 4,
             title: "Crypto Alarm System",
-            image: "/images/project_4.png",
+            image: "/images/project_4.webp",
             githubUrl: "https://github.com/berkayhancer21/crypto_alarms_system",
             technologies: ["Next.js", "React", "stock exchange API", "REST API", "Telegram Bot API", "TypeScript"]
         }
     ];
 
     return (
-        <section id="works" ref={sectionRef} className="app-showcase py-16">
+        <section id="works" ref={sectionRef} className="app-showcase md:pt-20 pt-8 pb-16">
             <div className="container mx-auto px-4">
                 <div id="works-inner" className="works-inner mx-auto w-full max-w-6xl px-4">
                     <TitleHeader title="Projects" sub="👨‍💻 My Works" />
@@ -134,7 +134,7 @@ const ShowcaseSection = () => {
                                 >
                                     <div className="project-inner">
                                         <div className="project-image">
-                                            <img src={project.image} alt={project.title} />
+                                            <img src={project.image} alt={project.title} loading="lazy" decoding="async" />
 
                                             {/* Sağ üst köşe linki */}
                                             <div className="project-link-icon">

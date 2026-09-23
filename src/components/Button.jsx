@@ -1,8 +1,8 @@
 // File: src/components/Button.jsx
-import React from "react";
+import { Link } from "react-router-dom";
 /**
- * CTA button: accepts `href` (e.g. "#works") and performs smooth scroll
- * taking navbar height into account. Also preserves accessible href.
+ * CTA button: accepts `href` as a route (e.g. "/projects") or a hash (e.g. "#works").
+ * Hash links perform smooth scroll taking navbar height into account.
  */
 const Button = ({ text, className, href, id }) => {
     const handleClick = (e) => {
@@ -23,6 +23,25 @@ const Button = ({ text, className, href, id }) => {
         window.scrollTo({ top, behavior: "smooth" });
     };
 
+    const content = (
+        <div className="cta-button group">
+            <div className="bg-circle" />
+            <p className="text">{text}</p>
+            <div className="arrow-wrapper">
+                <img src="/images/arrow-down.svg" alt="arrow" />
+            </div>
+        </div>
+    );
+
+    // Sayfa (route) linkleri: tam sayfa yenilemeden geçiş
+    if (href?.startsWith("/")) {
+        return (
+            <Link to={href} className={`${className ?? ""} cta-wrapper`} id={id ?? undefined}>
+                {content}
+            </Link>
+        );
+    }
+
     return (
         <a
             href={href ?? "#"}
@@ -30,13 +49,7 @@ const Button = ({ text, className, href, id }) => {
             className={`${className ?? ""} cta-wrapper`}
             id={id ?? undefined}
         >
-            <div className="cta-button group">
-                <div className="bg-circle" />
-                <p className="text">{text}</p>
-                <div className="arrow-wrapper">
-                    <img src="/images/arrow-down.svg" alt="arrow" />
-                </div>
-            </div>
+            {content}
         </a>
     );
 };

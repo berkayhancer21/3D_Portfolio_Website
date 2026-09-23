@@ -20,10 +20,19 @@ const DownloadIcon = () => (
     </svg>
 );
 
+// Kilit ikonu (bulanık önizleme üzerinde)
+const LockIcon = () => (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="10" width="16" height="11" rx="2.5" stroke="currentColor" strokeWidth="2"/>
+        <path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <circle cx="12" cy="15.5" r="1.5" fill="currentColor"/>
+    </svg>
+);
+
 const Cv = () => {
     const cvPath = "/files/Berkay_HANÇER_CV_Ingilizce.pdf";
-    const cvImagePath = "/files/Berkay_Hancer_CV_EN.png";
-    const isMobile = window.innerWidth <= 768;
+    // Bulanık, düşük çözünürlüklü önizleme (gerçek içerik sadece PDF'te)
+    const cvPreviewPath = "/files/cv-preview-blurred.webp";
 
     useGSAP(() => {
         // Başlık animasyonu
@@ -111,23 +120,25 @@ const Cv = () => {
                                 <PreviewIcon />
                             </button>
 
-                            {/* PDF/PNG Embed - Mobilde PNG, Desktop'ta PDF */}
-                            <div className="cv-pdf-embed">
-                                {isMobile ? (
-                                    // Mobilde PNG göster
-                                    <img
-                                        src={cvImagePath}
-                                        alt="Berkay HANÇER CV"
-                                        className="cv-image w-full h-auto object-contain"
-                                    />
-                                ) : (
-                                    // Desktop'ta PDF göster
-                                    <iframe
-                                        src={`${cvPath}#toolbar=0&navpanes=0&scrollbar=0`}
-                                        title="Berkay HANÇER CV"
-                                        className="cv-iframe"
-                                    />
-                                )}
+                            {/* Bulanık CV önizlemesi */}
+                            <div className="cv-pdf-embed cv-blurred">
+                                <img
+                                    src={cvPreviewPath}
+                                    alt="Blurred preview of Berkay HANÇER's CV"
+                                    className="cv-image"
+                                    width="720"
+                                    height="1018"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+
+                                <div className="cv-blur-overlay">
+                                    <div className="cv-blur-badge">
+                                        <LockIcon />
+                                    </div>
+                                    <p className="cv-blur-title">Full CV available as PDF</p>
+                                    <p className="cv-blur-text">Download or open it to see all the details</p>
+                                </div>
                             </div>
                         </div>
                     </div>

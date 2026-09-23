@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 import {socialImgs, navLinks} from "../constants/index.js";
 
 const Footer = () => {
@@ -6,9 +7,9 @@ const Footer = () => {
             <div className="footer-container-new">
                 {/* Sol Taraf - Logo ve Açıklama */}
                 <div className="footer-left">
-                    <a href="#hero" className="footer-logo">
+                    <Link to="/home" className="footer-logo">
                         Berkay HANÇER
-                    </a>
+                    </Link>
                     <p className="footer-description">
                         Constantly evolving as a developer, I craft modern applications and deliver innovative solutions
                         that blend creativity with cutting-edge technology.
@@ -29,9 +30,9 @@ const Footer = () => {
                         <ul className="footer-links-list">
                             {navLinks.map(({ link, name}) => (
                                 <li key={name}>
-                                    <a href={link} className="footer-link">
+                                    <Link to={link} className="footer-link">
                                         {name}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
